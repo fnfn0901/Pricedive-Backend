@@ -9,9 +9,13 @@ import java.util.List;
 @Service
 public class EventPreviewService {
 
-    public List<EventPreview> getEventPreviews(String category, String keyword, Boolean isLiked) {
-        List<EventPreview> allPreviews = getMockData();
+    private final List<EventPreview> allPreviews;
 
+    public EventPreviewService() {
+        this.allPreviews = initializePreviewData();
+    }
+
+    public List<EventPreview> getEventPreviews(String category, String keyword, Boolean isLiked) {
         List<EventPreview> filteredPreviews = new ArrayList<>();
         for (EventPreview preview : allPreviews) {
             boolean matches = true;
@@ -30,15 +34,14 @@ public class EventPreviewService {
                 filteredPreviews.add(preview);
             }
         }
-
         return filteredPreviews;
     }
 
-    private List<EventPreview> getMockData() {
-        List<EventPreview> mockData = new ArrayList<>();
-        mockData.add(new EventPreview(1L, "Category1", "Event1", true));
-        mockData.add(new EventPreview(2L, "Category2", "Event2", false));
-        mockData.add(new EventPreview(3L, "Category1", "Another Event", true));
-        return mockData;
+    private List<EventPreview> initializePreviewData() {
+        List<EventPreview> data = new ArrayList<>();
+        data.add(new EventPreview(1L, "Category1", "Event1", true));
+        data.add(new EventPreview(2L, "Category2", "Event2", false));
+        data.add(new EventPreview(3L, "Category1", "Another Event", true));
+        return data;
     }
 }

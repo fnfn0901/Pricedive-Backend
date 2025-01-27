@@ -7,16 +7,21 @@ import java.util.*;
 @Service
 public class LikeEventService {
 
-    private final Map<String, List<Long>> mockLikeData = new HashMap<>();
+    private final Map<String, List<Long>> likeData;
 
     public LikeEventService() {
-        // 목데이터 초기화
-        mockLikeData.put("user1", Arrays.asList(1L, 2L, 3L));
-        mockLikeData.put("user2", Arrays.asList(2L, 4L));
-        mockLikeData.put("user3", Collections.singletonList(5L));
+        this.likeData = initializeLikeData();
     }
 
     public List<Long> getLikedEventIdsByUserId(String userId) {
-        return mockLikeData.getOrDefault(userId, Collections.emptyList());
+        return likeData.getOrDefault(userId, Collections.emptyList());
+    }
+
+    private Map<String, List<Long>> initializeLikeData() {
+        Map<String, List<Long>> data = new HashMap<>();
+        data.put("user1", Arrays.asList(1L, 2L, 3L));
+        data.put("user2", Arrays.asList(2L, 4L));
+        data.put("user3", Collections.singletonList(5L));
+        return data;
     }
 }

@@ -16,6 +16,9 @@ public class EventPreview {
     @Schema(description = "좋아요 여부", example = "true")
     private boolean liked;
 
+    public EventPreview() {
+    }
+
     public EventPreview(Long id, String category, String title, boolean liked) {
         this.id = id;
         this.category = category;

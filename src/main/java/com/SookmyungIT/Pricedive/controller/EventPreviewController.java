@@ -1,8 +1,9 @@
 package com.SookmyungIT.Pricedive.controller;
 
-import com.SookmyungIT.Pricedive.dto.APIResponse;
 import com.SookmyungIT.Pricedive.dto.EventPreview;
 import com.SookmyungIT.Pricedive.service.EventPreviewService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +19,17 @@ public class EventPreviewController {
     }
 
     @GetMapping
-    public APIResponse<List<EventPreview>> getEventPreviews(
+    public ResponseEntity<List<EventPreview>> getEventPreviews(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) Boolean isLiked
     ) {
         List<EventPreview> previews = eventPreviewService.getEventPreviews(category, keyword, isLiked);
-        return new APIResponse<>(true, "이벤트 미리보기 리스트를 성공적으로 가져왔습니다.", previews);
+
+        if (previews.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        return ResponseEntity.ok(previews);
     }
 }

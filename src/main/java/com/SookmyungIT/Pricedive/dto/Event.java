@@ -16,6 +16,9 @@ public class Event {
     @Schema(description = "이벤트 날짜", example = "2025-01-27")
     private String date;
 
+    public Event() {
+    }
+
     public Event(Long id, String name, String description, String date) {
         this.id = id;
         this.name = name;
@@ -23,7 +26,6 @@ public class Event {
         this.date = date;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
