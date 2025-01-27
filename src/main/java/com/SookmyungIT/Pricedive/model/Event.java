@@ -1,7 +1,6 @@
 package com.SookmyungIT.Pricedive.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Event {
@@ -9,7 +8,6 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private String title;
 
     private String channel_id;

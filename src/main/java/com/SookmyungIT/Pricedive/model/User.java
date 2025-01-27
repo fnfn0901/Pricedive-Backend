@@ -1,7 +1,6 @@
 package com.SookmyungIT.Pricedive.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class User {
@@ -10,13 +9,10 @@ public class User {
     @JoinColumn(name = "user_id")
     private Long user_id;
 
-    @NotNull
     private String pw;
 
-    @NotNull
     private String email;
 
-    @NotNull
     private String name;
 
     // Getters and Setters

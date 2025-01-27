@@ -1,7 +1,6 @@
 package com.SookmyungIT.Pricedive.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class EventPreview {
@@ -11,14 +10,17 @@ public class EventPreview {
 
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
-    @NotNull
     private Event event;
 
-    @NotNull
     private String event_item;
 
     private String preview_img;
+
     private String category;
+
+    private String channel_img;
+
+    private String date_end;
 
     // Getters and Setters
     public Long getId() {
@@ -59,5 +61,21 @@ public class EventPreview {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getChannelImg() {
+        return channel_img;
+    }
+
+    public void setChannelImg(String channelImg) {
+        this.channel_img = channelImg;
+    }
+
+    public String getDateEnd() {
+        return date_end;
+    }
+
+    public void setDateEnd(String dateEnd) {
+        this.date_end = dateEnd;
     }
 }

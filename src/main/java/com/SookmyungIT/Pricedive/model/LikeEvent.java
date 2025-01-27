@@ -1,7 +1,6 @@
 package com.SookmyungIT.Pricedive.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class LikeEvent {
@@ -11,12 +10,10 @@ public class LikeEvent {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @NotNull
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
-    @NotNull
     private Event event;
 
     // Getters and Setters
