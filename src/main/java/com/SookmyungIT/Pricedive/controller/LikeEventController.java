@@ -1,7 +1,6 @@
 package com.SookmyungIT.Pricedive.controller;
 
 import com.SookmyungIT.Pricedive.service.LikeEventService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +16,8 @@ public class LikeEventController {
         this.likeEventService = likeEventService;
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<Long>> getLikedEventIds(@PathVariable String userId) {
-        List<Long> likedEventIds = likeEventService.getLikedEventIdsByUserId(userId);
-        if (likedEventIds.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        return ResponseEntity.ok(likedEventIds);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Long>> getLikedEventsByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(likeEventService.getLikedEventIdsByUserId(userId));
     }
 }

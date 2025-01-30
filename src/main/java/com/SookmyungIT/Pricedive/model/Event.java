@@ -8,38 +8,72 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "video_id", nullable = false)
+    private Video video;
 
-    private String channel_id;
-    private String channel_img;
-    private String description;
-    private String tags;
-    private String url_link;
-    private String date_start;
-    private String date_end;
-    private String summarized_description;
+    private Long event_id;
+
+    @Column(nullable = false)
+    private int event_nums;
+    private String event_item;
+    private String preview_img;
+    private String category;
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-    public String getChannelId() { return channel_id; }
-    public void setChannelId(String channelId) { this.channel_id = channel_id; }
-    public String getChannelImg() { return channel_img; }
-    public void setChannelImg(String channelImg) { this.channel_img = channel_img; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public String getTags() { return tags; }
-    public void setTags(String tags) { this.tags = tags; }
-    public String getUrlLink() { return url_link; }
-    public void setUrlLink(String urlLink) { this.url_link = url_link; }
-    public String getDateStart() { return date_start; }
-    public void setDateStart(String dateStart) { this.date_start = date_start; }
-    public String getDateEnd() { return date_end; }
-    public void setDateEnd(String dateEnd) { this.date_end = date_end; }
-    public String getSummarizedDescription() { return summarized_description; }
-    public void setSummarizedDescription(String summarizedDescription) {
-        this.summarized_description = summarized_description;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
+    }
+
+    public Long getEventId() {
+        return event_id;
+    }
+
+    public void setEventId(Long event_id) {
+        this.event_id = event_id;
+    }
+
+    public int getEventNums() {
+        return event_nums;
+    }
+
+    public void setEventNums(int event_nums) {
+        this.event_nums = event_nums;
+    }
+
+    public String getEventItem() {
+        return event_item;
+    }
+
+    public void setEventItem(String event_item) {
+        this.event_item = event_item;
+    }
+
+    public String getPreviewImg() {
+        return preview_img;
+    }
+
+    public void setPreviewImg(String preview_img) {
+        this.preview_img = preview_img;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

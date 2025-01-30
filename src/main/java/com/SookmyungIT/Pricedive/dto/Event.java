@@ -2,28 +2,28 @@ package com.SookmyungIT.Pricedive.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "이벤트 상세 데이터")
+@Schema(description = "이벤트 미리보기 데이터")
 public class Event {
     @Schema(description = "이벤트 ID", example = "1")
     private Long id;
 
-    @Schema(description = "이벤트 이름", example = "Event Name")
-    private String name;
+    @Schema(description = "카테고리", example = "Category1")
+    private String category;
 
-    @Schema(description = "이벤트 설명", example = "This is a detailed event description.")
-    private String description;
+    @Schema(description = "제목", example = "Event1")
+    private String title;
 
-    @Schema(description = "이벤트 날짜", example = "2025-01-27")
-    private String date;
+    @Schema(description = "좋아요 여부", example = "true")
+    private boolean liked;
 
     public Event() {
     }
 
-    public Event(Long id, String name, String description, String date) {
+    public Event(Long id, String category, String title, boolean liked) {
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.date = date;
+        this.category = category;
+        this.title = title;
+        this.liked = liked;
     }
 
     public Long getId() {
@@ -34,27 +34,27 @@ public class Event {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCategory() {
+        return category;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public boolean isLiked() {
+        return liked;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 }

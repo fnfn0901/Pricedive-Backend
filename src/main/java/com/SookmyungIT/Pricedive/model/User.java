@@ -6,13 +6,11 @@ import jakarta.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "user_id")
+    @Column(name = "user_id")
     private Long user_id;
 
     private String pw;
-
     private String email;
-
     private String name;
 
     // Getters and Setters
