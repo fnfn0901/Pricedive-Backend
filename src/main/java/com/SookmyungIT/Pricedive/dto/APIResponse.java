@@ -22,42 +22,23 @@ public class APIResponse<T> {
         this.data = data;
     }
 
-    // 성공 응답 유틸리티 메서드
     public static <T> APIResponse<T> success(T data, String message) {
         return new APIResponse<>(200, message, data);
     }
 
-    // 에러 응답 유틸리티 메서드 (클라이언트 에러)
-    public static <T> APIResponse<T> clientError(int statusCode, String message) {
+    public static <T> APIResponse<T> error(int statusCode, String message) {
         return new APIResponse<>(statusCode, message, null);
-    }
-
-    // 에러 응답 유틸리티 메서드 (서버 에러)
-    public static <T> APIResponse<T> serverError(String message) {
-        return new APIResponse<>(500, message, null);
     }
 
     public int getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
-    }
-
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public T getData() {
         return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }
