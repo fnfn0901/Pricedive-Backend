@@ -3,23 +3,25 @@ package com.SookmyungIT.Pricedive.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long user_id;
+    private Long id;
 
     private String pw;
     private String email;
     private String name;
 
-    // Getters and Setters
-    public Long getUserId() {
-        return user_id;
+    public User() {}
+
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long user_id) {
-        this.user_id = user_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPw() {

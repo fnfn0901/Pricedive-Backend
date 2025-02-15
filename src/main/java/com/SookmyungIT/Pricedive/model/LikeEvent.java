@@ -3,41 +3,36 @@ package com.SookmyungIT.Pricedive.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "like_event")
 public class LikeEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false)
+    @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     private Event event;
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
+    public LikeEvent() {}
+
+    public LikeEvent(User user, Event event) {
+        this.user = user;
+        this.event = event;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Event getEvent() {
         return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
     }
 }

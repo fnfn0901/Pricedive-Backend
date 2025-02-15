@@ -1,28 +1,27 @@
 package com.SookmyungIT.Pricedive.service;
 
-import org.springframework.http.ResponseEntity;
+import com.SookmyungIT.Pricedive.repository.LikeEventRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LikeEventService {
 
-    private final Map<Long, List<Long>> likeData;
+    private final LikeEventRepository likeEventRepository;
 
-    public LikeEventService() {
-        this.likeData = initializeLikeData();
+    public LikeEventService(LikeEventRepository likeEventRepository) {
+        this.likeEventRepository = likeEventRepository;
     }
 
+    /**
+     * 특정 유저가 좋아요한 이벤트 ID 목록 조회
+     */
     public List<Long> getLikedEventIdsByUserId(Long userId) {
-        return likeData.getOrDefault(userId, Collections.emptyList());
-    }
-
-    private Map<Long, List<Long>> initializeLikeData() {
-        return new HashMap<>();
+        return likeEventRepository.findByUser_Id(userId)
+                .stream()
+                .map(likeEvent -> likeEvent.getEvent().getId())
+                .collect(Collectors.toList());
     }
 }
