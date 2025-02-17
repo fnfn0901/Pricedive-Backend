@@ -36,5 +36,4 @@ out/
 ### VS Code ###
 .vscode/.env
 application-secret.properties
-.env.env
 .env
