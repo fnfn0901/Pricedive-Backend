@@ -44,12 +44,20 @@ public class LikeEventService {
             return false;
         }
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("이벤트를 찾을 수 없습니다."));
+        try {
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다. userId: " + userId));
 
-        LikeEvent likeEvent = new LikeEvent(user, event);
-        likeEventRepository.save(likeEvent);
-        return true;
+            Event event = eventRepository.findById(eventId)
+                    .orElseThrow(() -> new IllegalArgumentException("이벤트를 찾을 수 없습니다. eventId: " + eventId));
+
+            LikeEvent likeEvent = new LikeEvent(user, event);
+            likeEventRepository.save(likeEvent);
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.err.println("❌ 오류 발생: " + e.getMessage());
+            return false;
+        }
     }
 
     /**
@@ -59,8 +67,10 @@ public class LikeEventService {
     public boolean removeLikeEvent(Long userId, Long eventId) {
         LikeEvent likeEvent = likeEventRepository.findByUser_IdAndEvent_Id(userId, eventId);
         if (likeEvent == null) {
+            System.err.println("❌ 좋아요 기록이 존재하지 않음: userId = " + userId + ", eventId = " + eventId);
             return false;
         }
+
         likeEventRepository.delete(likeEvent);
         return true;
     }

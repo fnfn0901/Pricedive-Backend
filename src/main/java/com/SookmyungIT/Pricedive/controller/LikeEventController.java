@@ -31,10 +31,15 @@ public class LikeEventController {
      */
     @PostMapping("/user/{userId}/event/{eventId}")
     public ResponseEntity<String> addLikeEvent(@PathVariable Long userId, @PathVariable Long eventId) {
-        boolean isAdded = likeEventService.addLikeEvent(userId, eventId);
-        return isAdded
-                ? ResponseEntity.ok("좋아요가 추가되었습니다.")
-                : ResponseEntity.badRequest().body("이미 좋아요한 이벤트입니다.");
+        try {
+            boolean isAdded = likeEventService.addLikeEvent(userId, eventId);
+            return isAdded
+                    ? ResponseEntity.ok("좋아요가 추가되었습니다.")
+                    : ResponseEntity.badRequest().body("이미 좋아요한 이벤트입니다.");
+        } catch (Exception e) {
+            System.err.println("❌ 좋아요 추가 중 오류 발생: " + e.getMessage());
+            return ResponseEntity.status(500).body("서버 오류: " + e.getMessage());
+        }
     }
 
     /**
@@ -43,9 +48,14 @@ public class LikeEventController {
      */
     @DeleteMapping("/user/{userId}/event/{eventId}")
     public ResponseEntity<String> removeLikeEvent(@PathVariable Long userId, @PathVariable Long eventId) {
-        boolean isRemoved = likeEventService.removeLikeEvent(userId, eventId);
-        return isRemoved
-                ? ResponseEntity.ok("좋아요가 삭제되었습니다.")
-                : ResponseEntity.badRequest().body("좋아요 상태가 아닙니다.");
+        try {
+            boolean isRemoved = likeEventService.removeLikeEvent(userId, eventId);
+            return isRemoved
+                    ? ResponseEntity.ok("좋아요가 삭제되었습니다.")
+                    : ResponseEntity.badRequest().body("좋아요 상태가 아닙니다.");
+        } catch (Exception e) {
+            System.err.println("❌ 좋아요 삭제 중 오류 발생: " + e.getMessage());
+            return ResponseEntity.status(500).body("서버 오류: " + e.getMessage());
+        }
     }
 }
