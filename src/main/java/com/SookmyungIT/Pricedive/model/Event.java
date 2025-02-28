@@ -1,6 +1,7 @@
 package com.SookmyungIT.Pricedive.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Event {
@@ -8,17 +9,17 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "video_id", nullable = false)
-    private Video video;
-
     private Long event_id;
-
-    @Column(nullable = false)
     private int event_nums;
     private String event_item;
     private String preview_img;
     private String category;
+    private Long video_id;
+    private String title;
+    private boolean liked;
+
+    @Column(name = "date_end", nullable = false)
+    private LocalDateTime dateEnd;
 
     // Getters and Setters
     public Long getId() {
@@ -27,14 +28,6 @@ public class Event {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Video getVideo() {
-        return video;
-    }
-
-    public void setVideo(Video video) {
-        this.video = video;
     }
 
     public Long getEventId() {
@@ -75,5 +68,37 @@ public class Event {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Long getVideoId() {
+        return video_id;
+    }
+
+    public void setVideoId(Long video_id) {
+        this.video_id = video_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
+    public LocalDateTime getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(LocalDateTime dateEnd) {
+        this.dateEnd = dateEnd;
     }
 }
