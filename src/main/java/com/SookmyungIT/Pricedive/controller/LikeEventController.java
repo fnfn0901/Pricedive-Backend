@@ -1,5 +1,6 @@
 package com.SookmyungIT.Pricedive.controller;
 
+import com.SookmyungIT.Pricedive.model.Event;
 import com.SookmyungIT.Pricedive.service.LikeEventService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,16 @@ public class LikeEventController {
     }
 
     /**
-     * 특정 유저가 좋아요한 이벤트 목록 조회
-     * GET /like_events/user/{userId}
+     * 특정 유저가 좋아요한 전체 또는 진행 중인 이벤트 목록 조회
+     * GET /like_events/user/{userId}?ongoing=true
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Long>> getLikedEventsByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(likeEventService.getLikedEventIdsByUserId(userId));
+    public ResponseEntity<List<Event>> getLikedEventsByUserId(
+            @PathVariable Long userId,
+            @RequestParam(value = "ongoing", required = false, defaultValue = "false") boolean ongoing) {
+
+        List<Event> likedEvents = likeEventService.getLikedEventsByUserId(userId, ongoing);
+        return ResponseEntity.ok(likedEvents);
     }
 
     /**
