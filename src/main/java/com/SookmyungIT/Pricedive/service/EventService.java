@@ -20,32 +20,39 @@ public class EventService {
 
     public Optional<EventDTO> getEventById(Long id) {
         return eventRepository.findById(id)
-                .map(event -> new EventDTO(
-                        event.getId(),
-                        event.getCategory(),
-                        event.getEventNums(),
-                        event.getEventItem(),
-                        event.getPreviewImg(),
-                        event.getVideoId(),
-                        event.getDateEnd(),
-                        event.getTitle(),
-                        event.isLiked()
-                ));
+                .map(this::convertToDTO);
     }
 
-    public List<EventDTO> getAllEvents() {
-        return eventRepository.findAll().stream()
-                .map(event -> new EventDTO(
-                        event.getId(),
-                        event.getCategory(),
-                        event.getEventNums(),
-                        event.getEventItem(),
-                        event.getPreviewImg(),
-                        event.getVideoId(),
-                        event.getDateEnd(),
-                        event.getTitle(),
-                        event.isLiked()
-                ))
-                .collect(Collectors.toList());
+    /**
+     * ✅ 카테고리 및 검색어 필터링
+     */
+    public List<EventDTO> getEvents(String category, String search) {
+        List<Event> events;
+
+        if (category != null && search != null) {
+            events = eventRepository.findByCategoryAndTitleContainingIgnoreCase(category, search);
+        } else if (category != null) {
+            events = eventRepository.findByCategory(category);
+        } else if (search != null) {
+            events = eventRepository.findByTitleContainingIgnoreCase(search);
+        } else {
+            events = eventRepository.findAll();
+        }
+
+        return events.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    private EventDTO convertToDTO(Event event) {
+        return new EventDTO(
+                event.getId(),
+                event.getCategory(),
+                event.getEventNums(),
+                event.getEventItem(),
+                event.getPreviewImg(),
+                event.getVideoId(),
+                event.getDateEnd(),
+                event.getTitle(),
+                event.isLiked()
+        );
     }
 }

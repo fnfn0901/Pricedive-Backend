@@ -25,9 +25,15 @@ public class EventController {
         return ResponseEntity.ok(APIResponse.success(event, "이벤트 조회 성공"));
     }
 
+    /**
+     * ✅ 카테고리 및 검색어로 이벤트 필터링
+     */
     @GetMapping
-    public ResponseEntity<APIResponse<List<EventDTO>>> getAllEvents() {
-        List<EventDTO> events = eventService.getAllEvents();
-        return ResponseEntity.ok(APIResponse.success(events, "전체 이벤트 조회 성공"));
+    public ResponseEntity<APIResponse<List<EventDTO>>> getEvents(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String search
+    ) {
+        List<EventDTO> events = eventService.getEvents(category, search);
+        return ResponseEntity.ok(APIResponse.success(events, "이벤트 목록 조회 성공"));
     }
 }
