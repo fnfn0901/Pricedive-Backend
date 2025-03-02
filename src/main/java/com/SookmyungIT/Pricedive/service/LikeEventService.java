@@ -1,5 +1,6 @@
 package com.SookmyungIT.Pricedive.service;
 
+import com.SookmyungIT.Pricedive.dto.LikedEventResponse;
 import com.SookmyungIT.Pricedive.model.Event;
 import com.SookmyungIT.Pricedive.model.LikeEvent;
 import com.SookmyungIT.Pricedive.model.User;
@@ -11,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,13 +30,14 @@ public class LikeEventService {
     /**
      * 특정 유저가 좋아요한 전체 또는 진행 중인 이벤트 목록 조회
      */
-    public List<Event> getLikedEventsByUserId(Long userId, boolean ongoing) {
+    public List<LikedEventResponse> getLikedEventsByUserId(Long userId, boolean ongoing) {
         LocalDate today = LocalDate.now();
 
         return likeEventRepository.findByUser_Id(userId)
                 .stream()
                 .map(LikeEvent::getEvent) // LikeEvent 객체에서 Event 객체 추출
                 .filter(event -> !ongoing || event.getDateEnd().toLocalDate().isAfter(today)) // 진행 중 필터링
+                .map(event -> new LikedEventResponse(event.getId(), event.getEventItem(), event.getPreviewImg(), event.getDateEnd()))
                 .collect(Collectors.toList());
     }
 
@@ -58,7 +59,7 @@ public class LikeEventService {
             Event event = eventRepository.findById(eventId)
                     .orElseThrow(() -> new IllegalArgumentException("이벤트를 찾을 수 없습니다. eventId: " + eventId));
 
-            // 3. 좋아요 저장
+            // 3. ✅ setUserId, setEventId 없이 생성자로 저장
             LikeEvent likeEvent = new LikeEvent(user, event);
             likeEventRepository.save(likeEvent);
 
@@ -71,11 +72,11 @@ public class LikeEventService {
     }
 
     /**
-     * 특정 유저가 특정 이벤트에 좋아요 삭제 (Optional 사용하여 안전하게 처리)
+     * 특정 유저가 특정 이벤트에 좋아요 삭제
      */
     @Transactional
     public boolean removeLikeEvent(Long userId, Long eventId) {
-        Optional<LikeEvent> likeEventOpt = likeEventRepository.findByUser_IdAndEvent_Id(userId, eventId);
+        var likeEventOpt = likeEventRepository.findByUser_IdAndEvent_Id(userId, eventId);
 
         if (likeEventOpt.isEmpty()) {
             System.err.println("❌ 좋아요 기록이 존재하지 않음: userId = " + userId + ", eventId = " + eventId);

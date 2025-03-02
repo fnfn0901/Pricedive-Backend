@@ -1,6 +1,6 @@
 package com.SookmyungIT.Pricedive.controller;
 
-import com.SookmyungIT.Pricedive.model.Event;
+import com.SookmyungIT.Pricedive.dto.LikedEventResponse;
 import com.SookmyungIT.Pricedive.service.LikeEventService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +22,11 @@ public class LikeEventController {
      * GET /like_events/user/{userId}?ongoing=true
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Event>> getLikedEventsByUserId(
+    public ResponseEntity<List<LikedEventResponse>> getLikedEventsByUserId(
             @PathVariable Long userId,
             @RequestParam(value = "ongoing", required = false, defaultValue = "false") boolean ongoing) {
 
-        List<Event> likedEvents = likeEventService.getLikedEventsByUserId(userId, ongoing);
+        List<LikedEventResponse> likedEvents = likeEventService.getLikedEventsByUserId(userId, ongoing);
         return ResponseEntity.ok(likedEvents);
     }
 
