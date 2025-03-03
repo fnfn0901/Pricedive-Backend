@@ -23,25 +23,21 @@ public class EventDTO {
     @Schema(description = "비디오 ID", example = "100")
     private Long videoId;
 
+    @Schema(description = "채널 이미지", example = "https://example.com/channel.jpg")
+    private String channelImg;
+
     @Schema(description = "이벤트 종료 날짜", example = "2025-12-31T23:59:59")
     private LocalDateTime dateEnd;
 
-    @Schema(description = "제목", example = "Event1")
-    private String title;
-
-    @Schema(description = "좋아요 여부", example = "true")
-    private boolean liked;
-
-    public EventDTO(Long eventId, String category, int eventNums, String eventItem, String previewImg, Long videoId, LocalDateTime dateEnd, String title, boolean liked) {
+    public EventDTO(Long eventId, String category, int eventNums, String eventItem, String previewImg, Long videoId, String channelImg, LocalDateTime dateEnd) {
         this.eventId = eventId;
         this.category = category;
         this.eventNums = eventNums;
         this.eventItem = eventItem;
         this.previewImg = previewImg;
         this.videoId = videoId;
+        this.channelImg = channelImg;
         this.dateEnd = dateEnd;
-        this.title = title;
-        this.liked = liked;
     }
 
     public Long getEventId() {
@@ -68,15 +64,11 @@ public class EventDTO {
         return videoId;
     }
 
+    public String getChannelImg() {
+        return channelImg;
+    }
+
     public LocalDateTime getDateEnd() {
         return dateEnd;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public boolean isLiked() {
-        return liked;
     }
 }

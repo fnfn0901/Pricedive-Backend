@@ -11,12 +11,14 @@ public class Event {
 
     private Long event_id;
     private int event_nums;
-    private String event_item;
+
+    @Column(name = "event_item")
+    private String eventItem;
+
     private String preview_img;
     private String category;
     private Long video_id;
-    private String title;
-    private boolean liked;
+    private String channel_img;
 
     @Column(name = "date_end", nullable = false)
     private LocalDateTime dateEnd;
@@ -47,11 +49,11 @@ public class Event {
     }
 
     public String getEventItem() {
-        return event_item;
+        return eventItem;
     }
 
-    public void setEventItem(String event_item) {
-        this.event_item = event_item;
+    public void setEventItem(String eventItem) {
+        this.eventItem = eventItem;
     }
 
     public String getPreviewImg() {
@@ -78,20 +80,12 @@ public class Event {
         this.video_id = video_id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getChannelImg() {
+        return channel_img;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public boolean isLiked() {
-        return liked;
-    }
-
-    public void setLiked(boolean liked) {
-        this.liked = liked;
+    public void setChannelImg(String channel_img) {
+        this.channel_img = channel_img;
     }
 
     public LocalDateTime getDateEnd() {

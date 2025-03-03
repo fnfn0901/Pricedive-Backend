@@ -24,17 +24,17 @@ public class EventService {
     }
 
     /**
-     * ✅ 카테고리 및 검색어 필터링
+     * ✅ 카테고리 및 event_item 검색을 이용한 이벤트 필터링
      */
     public List<EventDTO> getEvents(String category, String search) {
         List<Event> events;
 
         if (category != null && search != null) {
-            events = eventRepository.findByCategoryAndTitleContainingIgnoreCase(category, search);
+            events = eventRepository.findByCategoryAndEventItemContainingIgnoreCase(category, search);
         } else if (category != null) {
             events = eventRepository.findByCategory(category);
         } else if (search != null) {
-            events = eventRepository.findByTitleContainingIgnoreCase(search);
+            events = eventRepository.findByEventItemContainingIgnoreCase(search);
         } else {
             events = eventRepository.findAll();
         }
@@ -50,9 +50,8 @@ public class EventService {
                 event.getEventItem(),
                 event.getPreviewImg(),
                 event.getVideoId(),
-                event.getDateEnd(),
-                event.getTitle(),
-                event.isLiked()
+                event.getChannelImg(),
+                event.getDateEnd()
         );
     }
 }

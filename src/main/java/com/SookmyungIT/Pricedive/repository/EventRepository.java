@@ -11,9 +11,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     // ✅ 특정 카테고리의 이벤트 가져오기
     List<Event> findByCategory(String category);
 
-    // ✅ 특정 검색어가 제목에 포함된 이벤트 가져오기 (대소문자 구분 없이)
-    List<Event> findByTitleContainingIgnoreCase(String search);
+    // ✅ 특정 검색어가 event_item에 포함된 이벤트 가져오기 (대소문자 구분 없이)
+    List<Event> findByEventItemContainingIgnoreCase(String search);
 
-    // ✅ 특정 카테고리 내에서 검색어가 포함된 이벤트 가져오기
-    List<Event> findByCategoryAndTitleContainingIgnoreCase(String category, String search);
+    // ✅ 특정 카테고리 내에서 event_item 검색어가 포함된 이벤트 가져오기
+    List<Event> findByCategoryAndEventItemContainingIgnoreCase(String category, String search);
 }

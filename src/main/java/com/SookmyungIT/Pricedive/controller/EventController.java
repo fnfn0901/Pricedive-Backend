@@ -26,7 +26,7 @@ public class EventController {
     }
 
     /**
-     * ✅ 카테고리 및 검색어로 이벤트 필터링
+     * ✅ 카테고리 및 event_item 검색을 이용한 이벤트 필터링
      */
     @GetMapping
     public ResponseEntity<APIResponse<List<EventDTO>>> getEvents(
