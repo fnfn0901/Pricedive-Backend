@@ -2,6 +2,8 @@ package com.SookmyungIT.Pricedive.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.List;
+
 @Schema(description = "비디오 상세 데이터")
 public class VideoDTO {
     @Schema(description = "비디오 ID", example = "1")
@@ -20,7 +22,7 @@ public class VideoDTO {
     private String description;
 
     @Schema(description = "비디오 태그", example = "['Tech', 'Tutorial']")
-    private String tags;
+    private List<String> tags;
 
     @Schema(description = "비디오 URL", example = "https://youtube.com/video123")
     private String urlLink;
@@ -36,7 +38,7 @@ public class VideoDTO {
 
     public VideoDTO() {}
 
-    public VideoDTO(Long id, String title, String channelId, String channelImg, String description, String tags, String urlLink, String dateStart, String dateEnd, String summarizedDescription) {
+    public VideoDTO(Long id, String title, String channelId, String channelImg, String description, List<String> tags, String urlLink, String dateStart, String dateEnd, String summarizedDescription) {
         this.id = id;
         this.title = title;
         this.channelId = channelId;
@@ -90,11 +92,11 @@ public class VideoDTO {
         this.description = description;
     }
 
-    public String getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(String tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 

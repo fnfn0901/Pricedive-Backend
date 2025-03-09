@@ -1,6 +1,7 @@
 package com.SookmyungIT.Pricedive.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Video {
