@@ -9,7 +9,8 @@ public class Video {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @Column(name = "event_item")
+    private String eventItem;
     private String channel_id;
     private String channel_img;
     private String description;
@@ -28,12 +29,12 @@ public class Video {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getEventItem() {
+        return eventItem;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setEventItem(String eventItem) {
+        this.eventItem = eventItem;
     }
 
     public String getChannelId() {

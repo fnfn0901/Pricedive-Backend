@@ -24,7 +24,7 @@ public class VideoService {
         return videoRepository.findById(id)
                 .map(video -> new VideoDTO(
                         video.getId(),
-                        video.getTitle(),
+                        video.getEventItem(),
                         video.getChannelId(),
                         video.getChannelImg(),
                         video.getDescription(),

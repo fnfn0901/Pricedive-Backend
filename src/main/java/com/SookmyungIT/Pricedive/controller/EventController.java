@@ -33,6 +33,7 @@ public class EventController {
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String search
     ) {
+        System.out.println("✅ [Controller] 검색어: " + search + ", 카테고리: " + category);
         List<EventDTO> events = eventService.getEvents(category, search);
         return ResponseEntity.ok(APIResponse.success(events, "이벤트 목록 조회 성공"));
     }

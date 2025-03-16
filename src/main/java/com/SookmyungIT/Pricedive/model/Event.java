@@ -20,6 +20,9 @@ public class Event {
     private Long video_id;
     private String channel_img;
 
+    @Column(name = "channel_id")
+    private String channelId;
+
     @Column(name = "date_end", nullable = false)
     private LocalDateTime dateEnd;
 
@@ -94,5 +97,13 @@ public class Event {
 
     public void setDateEnd(LocalDateTime dateEnd) {
         this.dateEnd = dateEnd;
+    }
+
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 }

@@ -27,14 +27,15 @@ public class EventService {
      * ✅ 카테고리 및 event_item 검색을 이용한 이벤트 필터링
      */
     public List<EventDTO> getEvents(String category, String search) {
-        List<Event> events;
+        System.out.println("✅ [Service] 검색어: " + search + ", 카테고리: " + category);
 
+        List<Event> events;
         if (category != null && search != null) {
-            events = eventRepository.findByCategoryAndEventItemContainingIgnoreCase(category, search);
+            events = eventRepository.searchByCategoryAndEventItemOrChannelId(category, search);
         } else if (category != null) {
             events = eventRepository.findByCategory(category);
         } else if (search != null) {
-            events = eventRepository.findByEventItemContainingIgnoreCase(search);
+            events = eventRepository.searchByEventItemOrChannelId(search);
         } else {
             events = eventRepository.findAll();
         }
@@ -51,6 +52,7 @@ public class EventService {
                 event.getPreviewImg(),
                 event.getVideoId(),
                 event.getChannelImg(),
+                event.getChannelId(),
                 event.getDateEnd()
         );
     }

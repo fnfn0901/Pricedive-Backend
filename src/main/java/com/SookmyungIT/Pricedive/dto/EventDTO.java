@@ -26,10 +26,13 @@ public class EventDTO {
     @Schema(description = "채널 이미지", example = "https://example.com/channel.jpg")
     private String channelImg;
 
+    @Schema(description = "채널 ID", example = "유튜버이름")
+    private String channelId;
+
     @Schema(description = "이벤트 종료 날짜", example = "2025-12-31T23:59:59")
     private LocalDateTime dateEnd;
 
-    public EventDTO(Long eventId, String category, int eventNums, String eventItem, String previewImg, Long videoId, String channelImg, LocalDateTime dateEnd) {
+    public EventDTO(Long eventId, String category, int eventNums, String eventItem, String previewImg, Long videoId, String channelImg, String channelId, LocalDateTime dateEnd) {
         this.eventId = eventId;
         this.category = category;
         this.eventNums = eventNums;
@@ -37,6 +40,7 @@ public class EventDTO {
         this.previewImg = previewImg;
         this.videoId = videoId;
         this.channelImg = channelImg;
+        this.channelId = channelId;
         this.dateEnd = dateEnd;
     }
 
@@ -66,6 +70,10 @@ public class EventDTO {
 
     public String getChannelImg() {
         return channelImg;
+    }
+
+    public String getChannelId() {
+        return channelId;
     }
 
     public LocalDateTime getDateEnd() {
