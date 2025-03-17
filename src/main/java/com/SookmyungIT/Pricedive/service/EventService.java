@@ -40,12 +40,14 @@ public class EventService {
             events = eventRepository.findAll();
         }
 
-        return events.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return events.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     private EventDTO convertToDTO(Event event) {
         return new EventDTO(
-                event.getId(),
+                event.getEventId(),
                 event.getCategory(),
                 event.getEventNums(),
                 event.getEventItem(),
