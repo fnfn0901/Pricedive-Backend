@@ -20,6 +20,9 @@ public class Video {
     private String date_end;
     private String summarized_description;
 
+    @Column(name = "google_form_link")
+    private String googleFormLink;
+
     // Getters and Setters
     public Long getId() {
         return id;
@@ -99,5 +102,13 @@ public class Video {
 
     public void setSummarizedDescription(String summarized_description) {
         this.summarized_description = summarized_description;
+    }
+
+    public String getGoogleFormLink() {
+        return googleFormLink;
+    }
+
+    public void setGoogleFormLink(String googleFormLink) {
+        this.googleFormLink = googleFormLink;
     }
 }

@@ -5,6 +5,7 @@ import com.SookmyungIT.Pricedive.model.Event;
 import com.SookmyungIT.Pricedive.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,7 +46,13 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * ✅ Event -> EventDTO 변환 + dateEnd null 처리
+     */
     private EventDTO convertToDTO(Event event) {
+        // 기본값 설정
+        LocalDateTime defaultDateEnd = LocalDateTime.of(2000, 1, 1, 0, 0);
+
         return new EventDTO(
                 event.getEventId(),
                 event.getCategory(),
@@ -55,7 +62,7 @@ public class EventService {
                 event.getVideoId(),
                 event.getChannelImg(),
                 event.getChannelId(),
-                event.getDateEnd()
+                event.getDateEnd() != null ? event.getDateEnd() : defaultDateEnd
         );
     }
 }

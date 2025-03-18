@@ -36,9 +36,12 @@ public class VideoDTO {
     @Schema(description = "요약 설명", example = "This is a summarized description.")
     private String summarizedDescription;
 
+    @Schema(description = "구글 폼 링크", example = "https://forms.gle/example123")
+    private String googleFormLink;
+
     public VideoDTO() {}
 
-    public VideoDTO(Long id, String title, String channelId, String channelImg, String description, List<String> tags, String urlLink, String dateStart, String dateEnd, String summarizedDescription) {
+    public VideoDTO(Long id, String title, String channelId, String channelImg, String description, List<String> tags, String urlLink, String dateStart, String dateEnd, String summarizedDescription, String googleFormLink) {
         this.id = id;
         this.title = title;
         this.channelId = channelId;
@@ -49,6 +52,7 @@ public class VideoDTO {
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.summarizedDescription = summarizedDescription;
+        this.googleFormLink = googleFormLink;
     }
 
     // Getter & Setter
@@ -130,5 +134,13 @@ public class VideoDTO {
 
     public void setSummarizedDescription(String summarizedDescription) {
         this.summarizedDescription = summarizedDescription;
+    }
+
+    public String getGoogleFormLink() {
+        return googleFormLink;
+    }
+
+    public void setGoogleFormLink(String googleFormLink) {
+        this.googleFormLink = googleFormLink;
     }
 }

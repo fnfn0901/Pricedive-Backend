@@ -2,6 +2,7 @@ package com.SookmyungIT.Pricedive.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Event {
@@ -23,7 +24,10 @@ public class Event {
     @Column(name = "channel_id")
     private String channelId;
 
-    @Column(name = "date_end", nullable = false)
+    @Column(name = "date_end")
+    private String dateEndRaw;
+
+    @Transient
     private LocalDateTime dateEnd;
 
     // Getters and Setters
@@ -91,19 +95,31 @@ public class Event {
         this.channel_img = channel_img;
     }
 
-    public LocalDateTime getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(LocalDateTime dateEnd) {
-        this.dateEnd = dateEnd;
-    }
-
     public String getChannelId() {
         return channelId;
     }
 
     public void setChannelId(String channelId) {
         this.channelId = channelId;
+    }
+
+    public LocalDateTime getDateEnd() {
+        if (dateEnd == null) {
+            try {
+                if (dateEndRaw == null || dateEndRaw.equals("0000-00-00 00:00:00")) {
+                    dateEnd = LocalDateTime.of(2000, 1, 1, 0, 0);
+                } else {
+                    dateEnd = LocalDateTime.parse(dateEndRaw, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                }
+            } catch (Exception e) {
+                dateEnd = LocalDateTime.of(2000, 1, 1, 0, 0);
+            }
+        }
+        return dateEnd;
+    }
+
+    public void setDateEnd(LocalDateTime dateEnd) {
+        this.dateEnd = dateEnd;
+        this.dateEndRaw = dateEnd.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }

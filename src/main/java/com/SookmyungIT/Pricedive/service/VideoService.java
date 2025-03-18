@@ -32,7 +32,8 @@ public class VideoService {
                         video.getUrlLink(),
                         video.getDateStart(),
                         video.getDateEnd(),
-                        video.getSummarizedDescription()
+                        video.getSummarizedDescription(),
+                        video.getGoogleFormLink()
                 ));
     }
 
