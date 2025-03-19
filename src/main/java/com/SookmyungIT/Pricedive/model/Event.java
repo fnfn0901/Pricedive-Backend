@@ -18,7 +18,10 @@ public class Event {
 
     private String preview_img;
     private String category;
-    private Long video_id;
+
+    @Column(name = "video_id")
+    private Long videoId;
+
     private String channel_img;
 
     @Column(name = "channel_id")
@@ -30,7 +33,6 @@ public class Event {
     @Transient
     private LocalDateTime dateEnd;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -80,11 +82,11 @@ public class Event {
     }
 
     public Long getVideoId() {
-        return video_id;
+        return videoId;
     }
 
-    public void setVideoId(Long video_id) {
-        this.video_id = video_id;
+    public void setVideoId(Long videoId) {
+        this.videoId = videoId;
     }
 
     public String getChannelImg() {

@@ -27,59 +27,50 @@ public class LikeEventService {
         this.eventRepository = eventRepository;
     }
 
-    /**
-     * 특정 유저가 좋아요한 전체 또는 진행 중인 이벤트 목록 조회
-     */
     public List<LikedEventResponse> getLikedEventsByUserId(Long userId, boolean ongoing) {
         LocalDate today = LocalDate.now();
 
         return likeEventRepository.findByUser_Id(userId)
                 .stream()
-                .map(LikeEvent::getEvent) // LikeEvent 객체에서 Event 객체 추출
-                .filter(event -> !ongoing || event.getDateEnd().toLocalDate().isAfter(today)) // 진행 중 필터링
-                .map(event -> new LikedEventResponse(event.getId(), event.getEventItem(), event.getPreviewImg(), event.getDateEnd()))
+                .map(likeEvent -> {
+                    Event event = eventRepository.findByVideoId(likeEvent.getVideoId())
+                            .orElse(null);
+                    if (event != null) {
+                        return new LikedEventResponse(event.getVideoId(), event.getEventItem(), event.getPreviewImg(), event.getDateEnd());
+                    }
+                    return null;
+                })
+                .filter(event -> event != null && (!ongoing || event.getDateEnd().toLocalDate().isAfter(today)))
                 .collect(Collectors.toList());
     }
 
-    /**
-     * 특정 유저가 특정 이벤트에 좋아요 추가 (중복 방지 및 동시성 문제 해결)
-     */
     @Transactional
-    public boolean addLikeEvent(Long userId, Long eventId) {
+    public boolean addLikeEvent(Long userId, Long videoId) {
         try {
-            // 1. 중복 확인
-            if (likeEventRepository.existsByUser_IdAndEvent_Id(userId, eventId)) {
-                System.out.println("⚠ 이미 좋아요한 이벤트입니다. userId = " + userId + ", eventId = " + eventId);
+            if (likeEventRepository.existsByUser_IdAndVideoId(userId, videoId)) {
                 return false;
             }
 
-            // 2. 유저와 이벤트 찾기
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다. userId: " + userId));
-            Event event = eventRepository.findById(eventId)
-                    .orElseThrow(() -> new IllegalArgumentException("이벤트를 찾을 수 없습니다. eventId: " + eventId));
 
-            // 3. ✅ setUserId, setEventId 없이 생성자로 저장
-            LikeEvent likeEvent = new LikeEvent(user, event);
+            Event event = eventRepository.findByVideoId(videoId)
+                    .orElseThrow(() -> new IllegalArgumentException("이벤트를 찾을 수 없습니다. videoId: " + videoId));
+
+            LikeEvent likeEvent = new LikeEvent(user, videoId);
             likeEventRepository.save(likeEvent);
 
-            System.out.println("✅ 좋아요 추가 성공: userId = " + userId + ", eventId = " + eventId);
             return true;
         } catch (Exception e) {
-            System.err.println("❌ 좋아요 추가 중 오류 발생: " + e.getMessage());
             return false;
         }
     }
 
-    /**
-     * 특정 유저가 특정 이벤트에 좋아요 삭제
-     */
     @Transactional
-    public boolean removeLikeEvent(Long userId, Long eventId) {
-        var likeEventOpt = likeEventRepository.findByUser_IdAndEvent_Id(userId, eventId);
+    public boolean removeLikeEvent(Long userId, Long videoId) {
+        var likeEventOpt = likeEventRepository.findByUser_IdAndVideoId(userId, videoId);
 
         if (likeEventOpt.isEmpty()) {
-            System.err.println("❌ 좋아요 기록이 존재하지 않음: userId = " + userId + ", eventId = " + eventId);
             return false;
         }
 

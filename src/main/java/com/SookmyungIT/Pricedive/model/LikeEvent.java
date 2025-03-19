@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "like_event", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"user_id", "event_id"})
+        @UniqueConstraint(columnNames = {"user_id", "video_id"})
 })
 public class LikeEvent {
     @Id
@@ -15,15 +15,14 @@ public class LikeEvent {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
-    private Event event;
+    @Column(name = "video_id", nullable = false)
+    private Long videoId;
 
     public LikeEvent() {}
 
-    public LikeEvent(User user, Event event) {
+    public LikeEvent(User user, Long videoId) {
         this.user = user;
-        this.event = event;
+        this.videoId = videoId;
     }
 
     public Long getId() {
@@ -34,7 +33,7 @@ public class LikeEvent {
         return user;
     }
 
-    public Event getEvent() {
-        return event;
+    public Long getVideoId() {
+        return videoId;
     }
 }

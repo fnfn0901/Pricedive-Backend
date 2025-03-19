@@ -17,10 +17,6 @@ public class LikeEventController {
         this.likeEventService = likeEventService;
     }
 
-    /**
-     * 특정 유저가 좋아요한 전체 또는 진행 중인 이벤트 목록 조회
-     * GET /like_events/user/{userId}?ongoing=true
-     */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<LikedEventResponse>> getLikedEventsByUserId(
             @PathVariable Long userId,
@@ -30,36 +26,26 @@ public class LikeEventController {
         return ResponseEntity.ok(likedEvents);
     }
 
-    /**
-     * 특정 유저가 특정 이벤트에 좋아요 추가
-     * POST /like_events/user/{userId}/event/{eventId}
-     */
-    @PostMapping("/user/{userId}/event/{eventId}")
-    public ResponseEntity<String> addLikeEvent(@PathVariable Long userId, @PathVariable Long eventId) {
+    @PostMapping("/user/{userId}/video/{videoId}")
+    public ResponseEntity<String> addLikeEvent(@PathVariable Long userId, @PathVariable Long videoId) {
         try {
-            boolean isAdded = likeEventService.addLikeEvent(userId, eventId);
+            boolean isAdded = likeEventService.addLikeEvent(userId, videoId);
             return isAdded
                     ? ResponseEntity.ok("좋아요가 추가되었습니다.")
-                    : ResponseEntity.badRequest().body("이미 좋아요한 이벤트입니다.");
+                    : ResponseEntity.badRequest().body("이미 좋아요한 비디오입니다.");
         } catch (Exception e) {
-            System.err.println("❌ 좋아요 추가 중 오류 발생: " + e.getMessage());
             return ResponseEntity.status(500).body("서버 오류: " + e.getMessage());
         }
     }
 
-    /**
-     * 특정 유저가 특정 이벤트에 좋아요 취소
-     * DELETE /like_events/user/{userId}/event/{eventId}
-     */
-    @DeleteMapping("/user/{userId}/event/{eventId}")
-    public ResponseEntity<String> removeLikeEvent(@PathVariable Long userId, @PathVariable Long eventId) {
+    @DeleteMapping("/user/{userId}/video/{videoId}")
+    public ResponseEntity<String> removeLikeEvent(@PathVariable Long userId, @PathVariable Long videoId) {
         try {
-            boolean isRemoved = likeEventService.removeLikeEvent(userId, eventId);
+            boolean isRemoved = likeEventService.removeLikeEvent(userId, videoId);
             return isRemoved
                     ? ResponseEntity.ok("좋아요가 삭제되었습니다.")
                     : ResponseEntity.badRequest().body("좋아요 상태가 아닙니다.");
         } catch (Exception e) {
-            System.err.println("❌ 좋아요 삭제 중 오류 발생: " + e.getMessage());
             return ResponseEntity.status(500).body("서버 오류: " + e.getMessage());
         }
     }
