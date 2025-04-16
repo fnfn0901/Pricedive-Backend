@@ -41,6 +41,9 @@ public class EventService {
             events = eventRepository.findAll();
         }
 
+        // dateEnd 기준으로 내림차순 정렬
+        events.sort((e1, e2) -> e2.getDateEnd().compareTo(e1.getDateEnd()));
+
         return events.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
