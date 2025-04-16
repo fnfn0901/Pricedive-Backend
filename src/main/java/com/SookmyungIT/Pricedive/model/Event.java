@@ -111,7 +111,12 @@ public class Event {
                 if (dateEndRaw == null || dateEndRaw.equals("0000-00-00 00:00:00")) {
                     dateEnd = LocalDateTime.of(2000, 1, 1, 0, 0);
                 } else {
-                    dateEnd = LocalDateTime.parse(dateEndRaw, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    // 날짜 문자열에 시간 정보가 없는 경우
+                    if (dateEndRaw.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                        dateEnd = LocalDateTime.parse(dateEndRaw + " 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    } else {
+                        dateEnd = LocalDateTime.parse(dateEndRaw, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    }
                 }
             } catch (Exception e) {
                 dateEnd = LocalDateTime.of(2000, 1, 1, 0, 0);
